@@ -57,7 +57,7 @@ app.get("/logout", async(req, res) => {
         if(error) {
             return next(error)
         }
-        res.redirect("http://localhost:3000/login")
+        res.redirect("https://google-github-authentication.netlify.app/login")
     })
 })
 
