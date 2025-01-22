@@ -19,9 +19,9 @@ connectdb();
 // middleware
 app.use(express.json())
 app.use(cors({
-    origin: 'https://google-github-authentication.netlify.app',  
+    origin: 'https://google-github-authentication.netlify.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true 
+    credentials: true
 }));
 
 app.use(session({
@@ -44,23 +44,26 @@ passport.serializeUser(authController.serializeUser)
 passport.deserializeUser(authController.deserializeUser)
 
 
-app.get("/login/success", async(req, res) => {
-    if(req.user) {
-        res.status(200).json({
-            message: "User login successfully",
-            user: req.user
-        })
-    } else {
-        res.status(200).json({
-            message: "Error: User Not login successfully"
+app.get("/login/success", async (req, res) => {
+    try {
+        if (req.user) {
+            res.status(200).json({
+                message: "User login successfully",
+                user: req.user
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: "Error: to login",
+            error: error.message
         })
     }
 })
 
 
-app.get("/logout", async(req, res) => {
-    req.logOut(function(error) {
-        if(error) {
+app.get("/logout", async (req, res) => {
+    req.logOut(function (error) {
+        if (error) {
             return next(error)
         }
         res.redirect("https://google-github-authentication.netlify.app/login")
