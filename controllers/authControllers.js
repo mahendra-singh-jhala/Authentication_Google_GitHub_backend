@@ -41,17 +41,15 @@ passport.use(new GitHubStrategy({
     callbackURL: "/auth/github/callback",
     scope: ["profile", "email"]
 }, async (accessToken, refreshToken, profile, done) => {
+    console.log(profile)
     try {
         let user = await User.findOne({ githubId: profile.id });
         if (!user) {
-            const email = profile.emails && profile.emails[0] ? profile.emails[0].value : null;
-            const image = profile.photos && profile.photos[0] ? profile.photos[0].value : null;
-
             user = new User({
                 githubId: profile.id,
                 displayName: profile.displayName,
-                email: email,
-                image: image
+                email: profile.emails[0].value,
+                image: profile.photos[0].value
             });
             await user.save();
         }
