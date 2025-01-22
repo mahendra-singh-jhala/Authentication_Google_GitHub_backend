@@ -5,6 +5,7 @@ const session = require("express-session")
 const passport = require("passport")
 const authRoutes = require("./routes/authRouter")
 const authController = require("./controllers/authControllers")
+const MongoStore = require('connect-mongo')
 
 
 // Load enviorment variables
@@ -18,7 +19,7 @@ connectdb();
 // middleware
 app.use(express.json())
 app.use(cors({
-    origin: 'https://google-github-authentication.netlify.app',  
+    origin: 'http://localhost:3000',  
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true 
 }));
@@ -26,7 +27,12 @@ app.use(cors({
 app.use(session({
     secret: process.env.SECRET_KEY,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: new MongoStore({
+        mongoUrl: 'mongodb://localhost:27017/your-database-name',
+        collectionName: 'sessions',
+        ttl: 14 * 24 * 60 * 60,
+    }),
 }))
 
 app.use(passport.initialize())
@@ -57,7 +63,7 @@ app.get("/logout", async(req, res) => {
         if(error) {
             return next(error)
         }
-        res.redirect("https://google-github-authentication.netlify.app/login")
+        res.redirect("http://localhost:3000/login")
     })
 })
 
