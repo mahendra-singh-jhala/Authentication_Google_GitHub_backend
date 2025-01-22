@@ -29,7 +29,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     store: new MongoStore({
-        mongoUrl: 'mongodb://localhost:27017/your-database-name',
+        mongoUrl: process.env.MONGO_URI,
         collectionName: 'sessions',
         ttl: 14 * 24 * 60 * 60,
     }),
