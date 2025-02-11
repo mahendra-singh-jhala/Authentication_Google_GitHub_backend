@@ -65,14 +65,14 @@ passport.use(new GitHubStrategy({
 module.exports = {
     loginWithGoogle: passport.authenticate("google", { scope: ["profile", "email"] }),
     GoogleCallback: passport.authenticate("google", {
-        successRedirect: "https://google-github-authentication.netlify.app",
-        failureRedirect: "https://google-github-authentication.netlify.app/login"
+        successRedirect: "http://localhost:3000",
+        failureRedirect: "http://localhost:3000/login"
     }),
 
     loginWithGitthub: passport.authenticate("github", { scope: ["profile", "email"] }),
     GithubCallback: passport.authenticate("github", {
-        successRedirect: "https://google-github-authentication.netlify.app",
-        failureRedirect: "https://google-github-authentication.netlify.app/login"
+        successRedirect: "http://localhost:3000",
+        failureRedirect: "http://localhost:3000/login"
     }),
 
 
