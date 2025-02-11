@@ -6,7 +6,6 @@ const User = require("../models/userModel")
 // Load enviorment variables
 require("dotenv").config()
 
-
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_ID,
     clientSecret: process.env.GOOGLE_SECRET,
@@ -15,7 +14,6 @@ passport.use(new GoogleStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         let user = await User.findOne({ googleId: profile.id });
-
         const email = profile.emails && profile.emails[0] ? profile.emails[0].value : null;
         const image = profile.photos && profile.photos[0] ? profile.photos[0].value : null;
         if (!user) {
@@ -58,7 +56,6 @@ passport.use(new GitHubStrategy({
         return done(error, null)
     }
 }))
-
 
 module.exports = {
     loginWithGoogle: passport.authenticate("google", { scope: ["profile", "email"] }),

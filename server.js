@@ -6,12 +6,10 @@ const passport = require("passport")
 const authRoutes = require("./routes/authRouter")
 const authController = require("./controllers/authControllers")
 
-
 // Load enviorment variables
 require("dotenv").config()
 
 const app = express()
-
 // Connect mongodb
 connectdb();
 
@@ -37,7 +35,6 @@ app.use(authRoutes);
 passport.serializeUser(authController.serializeUser)
 passport.deserializeUser(authController.deserializeUser)
 
-
 app.get("/login/success", async(req, res) => {
     if(req.user) {
         res.status(200).json({
@@ -51,7 +48,6 @@ app.get("/login/success", async(req, res) => {
     }
 })
 
-
 app.get("/logout", async(req, res) => {
     req.logOut(function(error) {
         if(error) {
@@ -60,7 +56,6 @@ app.get("/logout", async(req, res) => {
         res.redirect("http://localhost:3000/login")
     })
 })
-
 
 PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
